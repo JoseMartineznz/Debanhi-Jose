@@ -1080,7 +1080,7 @@ body.plural   .txt-plural{display:inline!important;}
 
     <div class="tl-item">
       <div class="tl-left reveal-left">
-        <span class="tl-time" id="cerTime">2:00 pm</span>
+        <span class="tl-time">2:00 pm</span>
         <p class="tl-event">Ceremonia Religiosa</p>
         <p class="tl-place">Parroquia Sagrado<br>Corazón de Jesús</p>
         <a class="map-link" href="https://maps.app.goo.gl/9BnzCXS2Wf7mtZLM8" target="_blank" rel="noopener noreferrer">↗ Ver ubicación</a>
@@ -1277,7 +1277,7 @@ body.plural   .txt-plural{display:inline!important;}
 
       <p class="body-text reveal d1" style="margin-bottom:20px;">
         <span class="txt-plural">Les agradecemos confirmar su asistencia antes del</span><span class="txt-singular" style="display:none;">Te agradecemos confirmar tu asistencia antes del</span>
-        <strong style="white-space:nowrap;">20 de junio de 2026</strong>
+        <strong id="rsvpDeadline" style="white-space:nowrap;">20 de junio de 2026</strong>
       </p>
       <div id="rsvpGuests"></div>
 
@@ -1352,6 +1352,7 @@ body.plural   .txt-plural{display:inline!important;}
   var params = new URLSearchParams(window.location.search);
   var nombre = params.get('nombre');
   var invitados = params.get('invitados');
+  var limite = params.get('limite');
   if(!nombre) return;
 
   nombre = decodeURIComponent(nombre);
@@ -1359,15 +1360,14 @@ body.plural   .txt-plural{display:inline!important;}
   window.guestNombre = nombre;
   window.guestNum = num;
 
+  // Fecha límite personalizada: ?limite=15%20de%20julio%20de%202026
+  if(limite){
+    var dlEl = document.getElementById('rsvpDeadline');
+    if(dlEl) dlEl.textContent = decodeURIComponent(limite);
+  }
+
   // Set singular/plural body class
   document.body.classList.add(num > 1 ? 'plural' : 'singular');
-
-  // Ceremony time
-  var hora = params.get('hora');
-  if(hora){
-    var cerTime = document.getElementById('cerTime');
-    if(cerTime) cerTime.textContent = hora;
-  }
 
   // Show name in splash
   var splashGuest = document.getElementById('splashGuest');
