@@ -1080,7 +1080,7 @@ body.plural   .txt-plural{display:inline!important;}
 
     <div class="tl-item">
       <div class="tl-left reveal-left">
-        <span class="tl-time">2:00 pm</span>
+        <span class="tl-time" id="ceremonyTime">2:00 pm</span>
         <p class="tl-event">Ceremonia Religiosa</p>
         <p class="tl-place">Parroquia Sagrado<br>Corazón de Jesús</p>
         <a class="map-link" href="https://maps.app.goo.gl/9BnzCXS2Wf7mtZLM8" target="_blank" rel="noopener noreferrer">↗ Ver ubicación</a>
@@ -1353,6 +1353,7 @@ body.plural   .txt-plural{display:inline!important;}
   var nombre = params.get('nombre');
   var invitados = params.get('invitados');
   var limite = params.get('limite');
+  var hora = params.get('hora');
   if(!nombre) return;
 
   nombre = decodeURIComponent(nombre);
@@ -1360,10 +1361,16 @@ body.plural   .txt-plural{display:inline!important;}
   window.guestNombre = nombre;
   window.guestNum = num;
 
-  // Fecha límite personalizada: ?limite=15%20de%20julio%20de%202026
+  // Fecha límite personalizada: ?limite=15+de+julio+de+2026
   if(limite){
     var dlEl = document.getElementById('rsvpDeadline');
     if(dlEl) dlEl.textContent = decodeURIComponent(limite);
+  }
+
+  // Hora de ceremonia personalizada: ?hora=3:00+pm
+  if(hora){
+    var htEl = document.getElementById('ceremonyTime');
+    if(htEl) htEl.textContent = decodeURIComponent(hora);
   }
 
   // Set singular/plural body class
